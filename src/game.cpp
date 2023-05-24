@@ -22,7 +22,7 @@ Game::~Game()
     delete Renderer;
 }
 
-void Game::Init(Texture2D texture)
+void Game::Init()
 {
     const char *vertexShaderFile = "./src/shaders/sprite.vert";
     const char *fragmentShaderFile = "./src/shaders/sprite.frag";
@@ -54,7 +54,7 @@ void Game::Update(float dt)
 
 }
 
-void Game::Render(Texture2D texture)
+void Game::Render()
 {
     glm::vec2 position = glm::vec2(200.0f, 200.0f);
     glm::vec2 size = glm::vec2(300.0f, 400.0f);

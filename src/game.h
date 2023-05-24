@@ -21,10 +21,10 @@ class Game
 	Game(unsigned int width, unsigned int height);
 	~Game();
 	// initialize game state (load all shaders/textures/levels)
-	void Init(Texture2D texture);
+	void Init();
 	//game loop
 	void ProcessInput(float dt);
 	void Update(float dt);
-	void Render(Texture2D texture);
+	void Render();
 };
 #endif
