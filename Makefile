@@ -1,0 +1,10 @@
+CXX=g++
+CXXFLAGS=-ldl -lglfw -Wall -pedantic
+OTHERFILES=./src/texture.cpp ./src/sprite_renderer.cpp ./src/game.cpp ./src/resource_manager.cpp
+EXEC=window
+
+window: 
+	$(CXX) -std=c++17 -o ./target/window.out ./src/window.cpp $(OTHERFILES) thirdparty/glad.c $(CXXFLAGS)
+
+run:
+	./target/window.out
