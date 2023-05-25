@@ -2,6 +2,9 @@
 #define GAME_H
 #include <vector>
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include "game_level.h"
 
 // represents the current state of the game

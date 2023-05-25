@@ -58,7 +58,8 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "cinttypes": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "map": "cpp"
     },
     "workbench.colorCustomizations": {
         "minimap.background": "#00000000",
