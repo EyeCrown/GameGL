@@ -43,7 +43,7 @@ public:
             // convert stream into string
             vertexCode = vShaderStream.str();
             fragmentCode = fShaderStream.str();	
-            if (false)
+            if (true)
             {
                 std::cout << vertexCode << std::endl;
                 std::cout << fragmentCode << std::endl;

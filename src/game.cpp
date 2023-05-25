@@ -3,9 +3,9 @@
 #include <iostream>
 
 #include "game.h"
-#include "sprite_renderer.h"
-#include "shader.h"
 #include "resource_manager.h"
+#include "sprite_renderer.h"
+#include "game_object.h"
 
 // Game-related State data
 SpriteRenderer          *Renderer;
@@ -26,7 +26,7 @@ void Game::Init()
 {
     const char *vertexShaderFile = "./src/shaders/sprite.vert";
     const char *fragmentShaderFile = "./src/shaders/sprite.frag";
-
+    
     // build and compile our shader program
     // ------------------------------------
     ResourceManager::LoadShader(vertexShaderFile, fragmentShaderFile, nullptr, "sprite");
@@ -44,12 +44,14 @@ void Game::Init()
     const char *blockFile = "./resources/textures/block.png";
     const char *blockSolidFile = "./resources/textures/block_solid.png";
     const char *bgFile = "./resources/textures/background.jpg";
-
-    ResourceManager::LoadTexture(faceFile, true, "face");
-    ResourceManager::LoadTexture(blockFile, false, "block");
-    ResourceManager::LoadTexture(blockSolidFile, false, "block_solid");
-    ResourceManager::LoadTexture(bgFile, false, "background");
-
+        
+    std::cout << "Begin loading textures" << std::endl;
+    ResourceManager::LoadTexture(faceFile, true, "face");               std::cout << "1st loading textures" << std::endl;
+    ResourceManager::LoadTexture(blockFile, false, "block");            std::cout << "2nd loading textures" << std::endl;
+    ResourceManager::LoadTexture(blockSolidFile, false, "block_solid"); std::cout << "3rd loading textures" << std::endl;
+    ResourceManager::LoadTexture(bgFile, false, "background");          std::cout << "4st loading textures" << std::endl;
+    std::cout << "End loading textures " << std::endl;
+    
     // load levels
     GameLevel lvl1; lvl1.Load("./levels/1.lvl", Width, Height / 2);
     GameLevel lvl2; lvl2.Load("./levels/2.lvl", Width, Height / 2);
@@ -75,24 +77,15 @@ void Game::Update(float dt)
 
 void Game::Render()
 {
-    /*
-    glm::vec2 position = glm::vec2(200.0f, 200.0f);
-    glm::vec2 size = glm::vec2(300.0f, 400.0f);
-    float rotate = 45.0f;
-    glm::vec3 color = glm::vec3(0.0f, 1.0f, 0.0f);
-    Renderer->DrawSprite(ResourceManager::GetTexture("face"), position, size, rotate, color);
-    */
-   if (State == GAME_ACTIVE)
-   {
+    
+    
+    
+    if (State == GAME_ACTIVE)
+    {
         // draw background
-        Renderer->DrawSprite(
-            ResourceManager::GetTexture("bacckground"), 
-            glm::vec2(0.0f, 0.0f), 
-            glm::vec2(Width, Height), 
-            0.0f
-        );
+        Renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0.0f, 0.0f), glm::vec2(Width, Height), 0.0f);
 
         // draw level
         Levels[Level].Draw(*Renderer);
-   }
+    }
 }
