@@ -85,7 +85,7 @@ void Game::Init()
     Levels.push_back(lvl2);
     Levels.push_back(lvl3);
     Levels.push_back(lvl4);
-    Level = 1;
+    Level = 2;
 
     std::cout << "Finishing Game Initialisation" << std::endl;
 }
@@ -123,7 +123,10 @@ void Game::ProcessInput(float dt)
 
 void Game::Update(float dt)
 {
+    // update objects
     Ball->Move(dt, Width);
+    // check for collisions
+    DoCollisions();
 }
 
 void Game::Render()
@@ -142,4 +145,62 @@ void Game::Render()
         // draw ball
         Ball->Draw(*Renderer);
     }
+}
+
+
+bool CheckCollision(GameObject &one, GameObject &two); // AABB - AABB
+bool CheckCollision(BallObject &one, GameObject &two); // AABB - Circle
+
+
+void Game::DoCollisions()
+{
+    for (GameObject &box : Levels[Level].Bricks)
+    {
+        if (!box.Destroyed)
+        {
+            if (CheckCollision(*Ball, box))
+            {
+                if (!box.IsSolid)
+                    box.Destroyed = true;
+            }
+        }
+    }
+}
+
+
+
+bool CheckCollision(GameObject &one, GameObject &two)
+{
+    // collision x-axis?
+    bool collisionX = one.Position.x + one.Size.x >= two.Position.x &&
+                        two.Position.x + two.Size.x >= one.Position.x;
+
+    // collision y-axis?
+    bool collisionY = one.Position.y + one.Size.y >= two.Position.y &&
+                        two.Position.y + two.Size.y >= one.Position.y;
+
+    // collision only if on both axes
+    return collisionX && collisionY;
+}
+
+bool CheckCollision(BallObject &one, GameObject &two)
+{
+    // get center point circle firt
+    glm::vec2 center(one.Position + one.Radius);
+
+    // calculate AABB info (center, half-extents)
+    glm::vec2 aabb_half_extents(two.Size.x / 2.0f, two.Size.y / 2.0f);
+    glm::vec2 aabb_center(two.Position.x + aabb_half_extents.x, two.Position.y + aabb_half_extents.y);
+
+    // get difference vector between centers
+    glm::vec2 difference = center - aabb_center;
+    glm::vec2 clamped =  glm::clamp(difference, -aabb_half_extents, aabb_half_extents);
+
+    // add clamped value to AABB_center and get the value closet to circle
+    glm::vec2 closest = aabb_center + clamped;
+
+    // vector between center circle and closest point AABB
+    difference = closest - center;
+
+    return glm::length(difference) < one.Radius;
 }
