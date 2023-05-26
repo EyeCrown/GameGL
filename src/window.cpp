@@ -43,6 +43,12 @@ int main()
         return -1;
     }
 
+    // OpenGL configuration
+    // --------------------
+    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     // initialize game
     // ---------------
     GameGL.Init();
