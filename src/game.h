@@ -14,6 +14,17 @@ enum GameState {
 	GAME_WIN
 };
 
+// Represents the four possible (collision) directions
+enum Direction {
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT
+};
+// Defines a Collision typedef that represents collision data
+typedef std::tuple<bool, Direction, glm::vec2> Collision; // <collision?, what direction?, difference vector center - closest point>
+
+
 class Game
 {
 	public:
@@ -34,5 +45,8 @@ class Game
 	void Update(float dt);
 	void Render();
 	void DoCollisions();
+	// reset
+    void ResetLevel();
+    void ResetPlayer();
 };
 #endif
